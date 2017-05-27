@@ -2,9 +2,9 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import path from 'path'
 import fs from 'fs'
-import shift from '../../src/index.js'
+import { toJasmine } from '../../src/index.js'
 
-describe('assertions codeshift', function () {
+describe.skip('chai to jasmine conversion', function () {
   it('converts toBe to to.be', function () {
     assertConversion('to-be')
   })
@@ -70,8 +70,8 @@ function assertConversion (fixtureName) {
   const jasmineContent = fs.readFileSync(jasmine).toString()
   const chaiContent = fs.readFileSync(chai).toString()
 
-  const transpiledJasmineContent = shift(jasmineContent)
+  const transpiled = toJasmine(chaiContent)
 
-  expect(transpiledJasmineContent).to.equal(chaiContent)
+  expect(transpiled).to.equal(jasmineContent)
 }
 

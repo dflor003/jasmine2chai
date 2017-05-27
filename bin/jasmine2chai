@@ -16,11 +16,11 @@ program
   .action(function(file) {
     var fs = require('fs')
     var path = require('path')
-    var shift = require('../dist/src').default
+    var app = require('../dist/src').default
 
     var content = fs.readFileSync(path.join(process.cwd(), file), 'utf8')
 
-    process.stdout.write(shift(content))
+    process.stdout.write(app.toChai(content))
   })
   .parse(process.argv)
 

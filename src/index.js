@@ -32,16 +32,33 @@ MATCHERS.toBeFalsy = convertToBeFalsy
 
 const MATCHER_NAMES = Object.keys(MATCHERS)
 
-export default function shift (source) {
+export function toChai (source) {
   const $ = j(source)
   callExpressionToMemberExpression($)
 
   return $.find(MemberExpression)
-    .filter(node => {
-      return MATCHER_NAMES.indexOf(node.value.property.name) !== -1
-    }).replaceWith(node => {
-      return MATCHERS[node.value.property.name](node)
-    }).toSource()
+  .filter(node => {
+    return MATCHER_NAMES.indexOf(node.value.property.name) !== -1
+  }).replaceWith(node => {
+    return MATCHERS[node.value.property.name](node)
+  }).toSource()
+}
+
+export function toJasmine (source) {
+  const $ = j(source)
+  callExpressionToMemberExpression($)
+
+  return $.find(MemberExpression)
+  .filter(node => {
+    return MATCHER_NAMES.indexOf(node.value.property.name) !== -1
+  }).replaceWith(node => {
+    return MATCHERS[node.value.property.name](node)
+  }).toSource()
+}
+
+export default {
+  toJasmine,
+  toChai
 }
 
 function jasmine2ChaiName (jasmineName) {
